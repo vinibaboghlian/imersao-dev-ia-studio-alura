@@ -1,4 +1,4 @@
-export type OperationType = '+' | '-' | '*' | '/';
+export type OperationType = '+' | '-' | '*' | '/' | '%';
 
 export interface OperationInfo {
   symbol: OperationType;

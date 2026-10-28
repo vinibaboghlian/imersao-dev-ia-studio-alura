@@ -10,6 +10,7 @@
 ---
 
 ## 📋 Sumário
+- [Notas de Atualização (Changelog)](#-notas-de-atualização-changelog)
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Funcionalidades](#-funcionalidades)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
@@ -24,9 +25,20 @@
 
 ---
 
+## 📌 Notas de Atualização (Changelog)
+
+> [!NOTE]
+> **Desafio do Dia 02 — Implementação da Operação de Porcentagem (%)**
+> - **Nova Função:** Adicionada a função modular `def porcentagem(a, b): return (a * b) / 100` para cálculo direto de taxas percentuais.
+> - **Expansão do Menu:** Inclusão da opção `5 -> Porcentagem (%)` no menu do terminal e ajuste no leitor `input()` para aceitar opções de `1` a `5`.
+> - **Controle de Fluxo:** Adicionado o bloco `elif opcao == '5':` com formatação f-string dedicada (`{b}% de {a} = {resultado}`).
+> - **Simulador Web Interativo:** Suporte ao cálculo e rastreamento de variáveis de porcentagem no simulador da aplicação web.
+
+---
+
 ## 🎯 Sobre o Projeto
 
-Este repositório contém uma **calculadora de terminal desenvolvida em Python**, capaz de executar com precisão as quatro operações matemáticas fundamentais: **adição**, **subtração**, **multiplicação** e **divisão**.
+Este repositório contém uma **calculadora de terminal desenvolvida em Python**, capaz de executar com precisão as operações matemáticas fundamentais: **adição**, **subtração**, **multiplicação**, **divisão** e **porcentagem**.
 
 O projeto foi construído com foco em **código limpo**, **modularidade** e **experiência do usuário (UX no terminal)**, servindo como projeto prático para conclusão da certificação na **Imersão Dev da Alura**.
 
@@ -43,6 +55,7 @@ O projeto foi construído com foco em **código limpo**, **modularidade** e **ex
 - ➖ **Subtração (`-`):** Subtração entre dois valores com suporte a números negativos.
 - ✖️ **Multiplicação (`*`):** Produto aritmético com precisão decimal.
 - ➗ **Divisão (`/`):** Divisão com validação preventiva de denominador nulo (`b == 0`).
+- 📊 **Porcentagem (`%`):** Cálculo de percentuais (`b% de a`) com fórmula direta.
 - 💬 **Menu Interativo:** Interface via linha de comando limpa e intuitiva.
 - 📄 **Saída Formatada:** Uso de *f-strings* modernas para exibição elegante dos resultados.
 
@@ -52,6 +65,7 @@ O projeto foi construído com foco em **código limpo**, **modularidade** e **ex
 
 - **Linguagem:** [Python 3.8+](https://www.python.org/)
 - **Ferramentas de Versionamento:** Git e GitHub
+- **Deploy:** GitHub Actions & GitHub Pages
 - **Ambiente de Desenvolvimento:** Google AI Studio / VS Code / Terminal
 
 ---
@@ -61,8 +75,10 @@ O projeto foi construído com foco em **código limpo**, **modularidade** e **ex
 ```plaintext
 imersao-dev-ia-studio-alura/
 │
-├── calculadora.py           # Código principal da calculadora com as 4 operações
-├── README.md                # Documentação oficial do projeto para avaliação
+├── .github/workflows/       # Fluxo de CI/CD para deploy automático
+├── calculadora.py           # Código principal da calculadora com as 5 operações
+├── src/                     # Interface web interativa com simulador passo a passo
+├── README.md                # Documentação oficial do projeto
 └── LICENSE                  # Licença de código aberto MIT
 ```
 
@@ -110,7 +126,7 @@ python3 calculadora.py
 
 ## 🖥️ Exemplo de Uso
 
-### 1. Operação de Adição
+### 1. Operação de Porcentagem
 ```text
 ===================================
      CALCULADORA EM PYTHON
@@ -120,17 +136,18 @@ Escolha a operação desejada:
   2 -> Subtração (-)
   3 -> Multiplicação (*)
   4 -> Divisão (/)
+  5 -> Porcentagem (%)
 ===================================
-Digite a opção (1/2/3/4): 1
-Digite o primeiro número: 24.5
-Digite o segundo número: 15.5
+Digite o número da operação (1/2/3/4/5): 5
+Digite o primeiro número: 200
+Digite o segundo número: 15
 
-Resultado: 24.5 + 15.5 = 40.0
+Resultado: 15.0% de 200.0 = 30.0
 ```
 
 ### 2. Validação de Divisão por Zero
 ```text
-Digite a opção (1/2/3/4): 4
+Digite o número da operação (1/2/3/4/5): 4
 Digite o primeiro número: 100
 Digite o segundo número: 0
 
@@ -162,10 +179,10 @@ Durante o desenvolvimento deste projeto, foram colocados em prática os seguinte
 
 ## 📈 Possíveis Melhorias Futuras
 
-- [ ] Suporte a operações científicas (potenciação `**`, porcentagem `%` e raiz quadrada).
+- [x] Suporte a operação de porcentagem `%` (implementado no Desafio 02).
 - [ ] Implementação de loop contínuo (`while True`) permitindo múltiplos cálculos consecutivos sem reiniciar o script.
 - [ ] Tratamento de exceções com `try / except` para capturar entradas não numéricas (`ValueError`).
-- [ ] Criação de interface gráfica com biblioteca visual.
+- [ ] Suporte a operações científicas (potenciação `**` e raiz quadrada).
 
 ---
 
