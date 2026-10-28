@@ -35,17 +35,21 @@ export const TerminalSimulator: React.FC = () => {
       opNumber = '4';
       funcName = 'dividir';
       mathResult = isZeroDivision ? 'Erro: Não é possível dividir por zero!' : n1 / n2;
+    } else if (op === '%') {
+      opNumber = '5';
+      funcName = 'porcentagem';
+      mathResult = (n1 * n2) / 100;
     }
 
     const stepList: ExecutionStep[] = [
       {
         stepNumber: 1,
-        lineExecuted: `opcao = input("Digite a opção (1/2/3/4): ")`,
+        lineExecuted: `opcao = input("Digite a opção (1/2/3/4/5): ")`,
         explanation: `O terminal solicita a opção. O usuário escolhe "${opNumber}" (operação de ${OPERATIONS.find(o => o.symbol === op)?.name}). O valor é armazenado como texto (string).`,
         variables: [
           { name: 'opcao', type: 'str', value: `"${opNumber}"`, description: `Opção escolhida para ${op}` }
         ],
-        terminalOutput: `$ python calculadora.py\n===================================\n     CALCULADORA EM PYTHON\n===================================\nEscolha a operação desejada:\n  1 -> Adição (+)\n  2 -> Subtração (-)\n  3 -> Multiplicação (*)\n  4 -> Divisão (/)\n===================================\nDigite a opção (1/2/3/4): ${opNumber}`
+        terminalOutput: `$ python calculadora.py\n===================================\n     CALCULADORA EM PYTHON\n===================================\nEscolha a operação desejada:\n  1 -> Adição (+)\n  2 -> Subtração (-)\n  3 -> Multiplicação (*)\n  4 -> Divisão (/)\n  5 -> Porcentagem (%)\n===================================\nDigite a opção (1/2/3/4/5): ${opNumber}`
       },
       {
         stepNumber: 2,
@@ -92,6 +96,30 @@ export const TerminalSimulator: React.FC = () => {
           { name: 'resultado', type: 'str', value: `"Erro: Não é possível dividir por zero!"`, description: 'Mensagem de proteção' }
         ],
         terminalOutput: `\nErro: Não é possível dividir por zero!`
+      });
+    } else if (op === '%') {
+      stepList.push({
+        stepNumber: 5,
+        lineExecuted: `def porcentagem(a, b):\n    return (a * b) / 100`,
+        explanation: `A função calcula a porcentagem ((${n1} * ${n2}) / 100 = ${mathResult}) e o comando return devolve o valor calculado para ser guardado em 'resultado'.`,
+        variables: [
+          { name: 'a', type: 'float', value: `${n1}`, description: 'Valor base' },
+          { name: 'b', type: 'float', value: `${n2}`, description: 'Taxa percentual (%)' },
+          { name: 'resultado', type: 'float', value: `${mathResult}`, description: 'Valor retornado pela função' }
+        ],
+        terminalOutput: `[Cálculo interno] ${n2}% de ${n1} = ${mathResult}`
+      });
+
+      stepList.push({
+        stepNumber: 6,
+        lineExecuted: `print(f"\\nResultado: {num2}% de {num1} = {resultado}")`,
+        explanation: `A f-string formata e exibe na tela o resultado da porcentagem calculada. Fim da execução com sucesso!`,
+        variables: [
+          { name: 'num1', type: 'float', value: `${n1}`, description: 'Valor base' },
+          { name: 'num2', type: 'float', value: `${n2}`, description: 'Porcentagem' },
+          { name: 'resultado', type: 'float', value: `${mathResult}`, description: 'Resultado final' }
+        ],
+        terminalOutput: `\nResultado: ${n2}% de ${n1} = ${mathResult}`
       });
     } else {
       stepList.push({
@@ -202,10 +230,10 @@ export const TerminalSimulator: React.FC = () => {
               15 + 7
             </button>
             <button
-              onClick={() => handlePreset('25', '/', '4')}
-              className="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 transition-colors"
+              onClick={() => handlePreset('200', '%', '15')}
+              className="px-2.5 py-1 text-xs bg-purple-950/40 hover:bg-purple-900/50 text-purple-300 rounded border border-purple-800/60 transition-colors"
             >
-              25 / 4
+              15% de 200
             </button>
             <button
               onClick={() => handlePreset('10', '/', '0')}
@@ -237,8 +265,8 @@ export const TerminalSimulator: React.FC = () => {
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
               Operação Básica
             </label>
-            <div className="grid grid-cols-4 gap-1 p-1 bg-[#090d16] border border-slate-700 rounded-lg">
-              {(['+', '-', '*', '/'] as OperationType[]).map((op) => (
+            <div className="grid grid-cols-5 gap-1 p-1 bg-[#090d16] border border-slate-700 rounded-lg">
+              {(['+', '-', '*', '/', '%'] as OperationType[]).map((op) => (
                 <button
                   key={op}
                   type="button"

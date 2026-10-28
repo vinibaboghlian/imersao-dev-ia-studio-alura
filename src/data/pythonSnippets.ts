@@ -2,7 +2,7 @@ import { ConceptItem, OperationInfo, QuizQuestion } from '../types';
 
 export const BASIC_CALCULATOR_CODE = `# ==========================================
 # CALCULADORA SIMPLES EM PYTHON
-# Operações básicas: +, -, * e /
+# Operações: +, -, *, / e % (Porcentagem)
 # ==========================================
 
 # 1. DEFINIÇÃO DAS FUNÇÕES
@@ -23,6 +23,10 @@ def dividir(a, b):
         return "Erro: Não é possível dividir por zero!"
     return a / b
 
+def porcentagem(a, b):
+    # Calcula b% de a: exemplo: a = 200, b = 15 -> 15% de 200 = 30.0
+    return (a * b) / 100
+
 # 2. APRESENTAÇÃO DO MENU
 print("=" * 35)
 print("     CALCULADORA EM PYTHON")
@@ -32,10 +36,11 @@ print("  1 -> Adição (+)")
 print("  2 -> Subtração (-)")
 print("  3 -> Multiplicação (*)")
 print("  4 -> Divisão (/)")
+print("  5 -> Porcentagem (%)")
 print("=" * 35)
 
 # 3. ENTRADA DE DADOS DO USUÁRIO
-opcao = input("Digite a opção (1/2/3/4): ")
+opcao = input("Digite a opção (1/2/3/4/5): ")
 
 # O input() sempre lê texto, por isso usamos float() para converter em número decimal
 num1 = float(input("Digite o primeiro número: "))
@@ -62,8 +67,12 @@ elif opcao == '4':
     else:
         print(f"\\nResultado: {num1} / {num2} = {resultado}")
 
+elif opcao == '5':
+    resultado = porcentagem(num1, num2)
+    print(f"\\nResultado: {num2}% de {num1} = {resultado}")
+
 else:
-    print("\\nOpção inválida! Escolha um número de 1 a 4.")
+    print("\\nOpção inválida! Escolha um número de 1 a 5.")
 `;
 
 export const ADVANCED_CALCULATOR_CODE = `# ==========================================
@@ -85,6 +94,9 @@ def dividir(a, b):
         return "Erro: Impossível dividir por zero!"
     return a / b
 
+def porcentagem(a, b):
+    return (a * b) / 100
+
 def obter_numero(mensagem):
     """Lê um número e garante que o usuário não digite letras"""
     while True:
@@ -102,22 +114,23 @@ while True:
     print("  2. Subtrair (-)")
     print("  3. Multiplicar (*)")
     print("  4. Dividir (/)")
+    print("  5. Porcentagem (%)")
     print("  0. Sair do programa")
     print("=" * 40)
 
-    opcao = input("Escolha uma opção (0 a 4): ").strip()
+    opcao = input("Escolha uma opção (0 a 5): ").strip()
 
     if opcao == '0':
         print("\\nObrigado por usar a calculadora! Até logo!")
         break
 
-    if opcao not in ['1', '2', '3', '4']:
+    if opcao not in ['1', '2', '3', '4', '5']:
         print("\\nOpção inválida! Tente novamente.")
         continue
 
     # Leitura segura dos dois números
-    n1 = obter_numero("Digite o primeiro número: ")
-    n2 = obter_numero("Digite o segundo número: ")
+    n1 = obter_numero("Digite o primeiro número (base): ")
+    n2 = obter_numero("Digite o segundo número (% ou valor): ")
 
     if opcao == '1':
         print(f"\\n>>> {n1} + {n2} = {somar(n1, n2)}")
@@ -128,6 +141,8 @@ while True:
     elif opcao == '4':
         res = dividir(n1, n2)
         print(f"\\n>>> {res if isinstance(res, str) else f'{n1} / {n2} = {res}'}")
+    elif opcao == '5':
+        print(f"\\n>>> {n2}% de {n1} = {porcentagem(n1, n2)}")
 
     # Pergunta se o usuário quer fazer outro cálculo
     continuar = input("\\nDeseja fazer outro cálculo? (s/n): ").lower()
@@ -168,6 +183,14 @@ export const OPERATIONS: OperationInfo[] = [
     pythonSyntax: 'a / b',
     example: '25 / 4 = 6.25',
     description: 'Divide o primeiro valor pelo segundo. Em Python, a barra (/) sempre retorna float.'
+  },
+  {
+    symbol: '%',
+    name: 'Porcentagem',
+    funcName: 'porcentagem(a, b)',
+    pythonSyntax: '(a * b) / 100',
+    example: '15% de 200 = 30.0',
+    description: 'Calcula b% de a multiplicando o valor base pela taxa percentual e dividindo por 100.'
   }
 ];
 
@@ -303,14 +326,9 @@ export const README_MARKDOWN = `# Calculadora Simples em Python 🧮
 
 ## 🎯 Sobre o Projeto
 
-Este repositório contém uma **calculadora de terminal desenvolvida em Python**, capaz de executar com precisão as quatro operações matemáticas fundamentais: **adição**, **subtração**, **multiplicação** e **divisão**.
+Este repositório contém uma **calculadora de terminal desenvolvida em Python**, capaz de executar com precisão as operações matemáticas fundamentais: **adição**, **subtração**, **multiplicação**, **divisão** e **porcentagem**.
 
 O projeto foi construído com foco em **código limpo**, **modularidade** e **experiência do usuário (UX no terminal)**, servindo como projeto prático para conclusão da certificação na **Imersão Dev da Alura**.
-
-### Destaques do Projeto:
-- **Organização conforme a PEP 8:** Nomes descritivos de variáveis e funções, indentação consistente de 4 espaços.
-- **Funções Puras e Modulares:** Cada cálculo aritmético possui sua própria função isolada (\`def\`), facilitando testes e manutenções.
-- **Prevenção de Falhas Críticas:** Tratamento preventivo de divisão por zero antes que ocorra a quebra com \`ZeroDivisionError\`.
 
 ---
 
@@ -320,57 +338,9 @@ O projeto foi construído com foco em **código limpo**, **modularidade** e **ex
 - ➖ **Subtração:** Diferença entre dois valores numéricos.
 - ✖️ **Multiplicação:** Produto aritmético entre dois números.
 - ➗ **Divisão com Validação:** Divisão de números reais com verificação prévia para evitar o erro \`ZeroDivisionError\`.
+- 📊 **Porcentagem:** Cálculo de percentual (\`b% de a\`) com fórmula matemática direta.
 - 💬 **Menu Interativo:** Interface via linha de comando amigável com instruções claras.
 - 📄 **Saída Formatada:** Uso de *f-strings* modernas para apresentação clara dos resultados.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Linguagem:** [Python 3.8+](https://www.python.org/)
-- **Paradigma:** Programação Estruturada e Modular
-- **Ferramentas de Desenvolvimento:** VS Code / Terminal / Git
-
----
-
-## 📂 Estrutura do Repositório
-
-\`\`\`plaintext
-calculadora-python/
-│
-├── calculadora.py           # Código-fonte principal com as 4 operações
-├── calculadora_avancada.py  # Versão com loop contínuo e tratamento try/except
-├── README.md                # Documentação completa do projeto
-└── LICENSE                  # Licença de uso aberta (MIT)
-\`\`\`
-
----
-
-## 🚀 Pré-requisitos e Instalação
-
-Para clonar e testar o projeto no seu computador:
-
-### 1. Clonar o repositório
-
-**Via SSH (recomendado):**
-\`\`\`bash
-git clone git@github.com:vinibaboghlian/imersao-dev-ia-studio-alura.git
-cd imersao-dev-ia-studio-alura
-\`\`\`
-
-**Via HTTPS:**
-\`\`\`bash
-git clone https://github.com/vinibaboghlian/imersao-dev-ia-studio-alura.git
-cd imersao-dev-ia-studio-alura
-\`\`\`
-
-### 2. Verificar a instalação do Python
-Abra o seu terminal (Prompt de Comando, PowerShell ou Bash) e verifique se o Python está configurado:
-\`\`\`bash
-python --version
-# ou em alguns sistemas Unix:
-python3 --version
-\`\`\`
 
 ---
 
@@ -379,18 +349,12 @@ python3 --version
 Execute o script diretamente pelo terminal:
 
 \`\`\`bash
-# Versão padrão
 python calculadora.py
-
-# Caso utilize Linux/macOS e a versão padrão aponte para python2:
-python3 calculadora.py
 \`\`\`
 
 ---
 
 ## 🖥️ Exemplo de Uso
-
-Ao iniciar a aplicação, o menu interativo é exibido:
 
 \`\`\`text
 ===================================
@@ -401,68 +365,12 @@ Escolha a operação desejada:
   2 -> Subtração (-)
   3 -> Multiplicação (*)
   4 -> Divisão (/)
+  5 -> Porcentagem (%)
 ===================================
-Digite a opção (1/2/3/4): 1
-Digite o primeiro número: 15
-Digite o segundo número: 7
+Digite o número da operação (1/2/3/4/5): 5
+Digite o primeiro número: 200
+Digite o segundo número: 15
 
-Resultado: 15.0 + 7.0 = 22.0
+Resultado: 15.0% de 200.0 = 30.0
 \`\`\`
-
-### Teste de Prevenção de Erro (Divisão por Zero):
-\`\`\`text
-Digite a opção (1/2/3/4): 4
-Digite o primeiro número: 10
-Digite o segundo número: 0
-
-Erro: Não é possível dividir por zero!
-\`\`\`
-
----
-
-## 🧠 Conceitos Teóricos Aplicados
-
-Durante o desenvolvimento deste projeto, foram praticados e documentados os seguintes pilares da ciência da computação:
-
-1. **Modularização com Funções (\`def\` e \`return\`):**
-   Criação de blocos reutilizáveis de código, garantindo baixo acoplamento e facilidade na realização de testes unitários futuros.
-
-2. **Entrada e Tipagem Dinâmica (\`input\` e \`float\`):**
-   Compreensão de que a função nativa \`input()\` retorna dados do tipo \`str\` (texto), exigindo a conversão explícita (type casting) com \`float()\` para permitir operações com casas decimais.
-
-3. **Controle de Fluxo e Condicionais (\`if\`, \`elif\`, \`else\`):**
-   Avaliação lógica de condições booleanas para direcionar o fluxo de execução para a função correspondente à escolha do usuário.
-
-4. **Tratamento de Edge Cases (Casos de Borda):**
-   Validação preventiva do denominador em divisões, assegurando que o programa não seja abortado abruptamente com uma exceção não tratada.
-
-5. **Interpolação de Strings (\`f-strings\`):**
-   Formatação limpa e legível de saídas no terminal, recurso nativo introduzido a partir do Python 3.6.
-
----
-
-## 📈 Possíveis Melhorias Futuras
-
-- [ ] Implementar operações adicionais (potenciação \`**\`, raiz quadrada e módulo \`%\`).
-- [ ] Construir uma interface gráfica com bibliotecas como \`Tkinter\` ou \`PyQt\`.
-- [ ] Adicionar histórico de cálculos em arquivo \`.txt\` ou \`.csv\`.
-- [ ] Implementar testes automatizados com \`pytest\` ou \`unittest\`.
-
----
-
-## 📜 Licença
-
-Distribuído sob a licença **MIT**. Veja o arquivo \`LICENSE\` para mais informações.
-
----
-
-## 👤 Autor
-
-Desenvolvido por **Vini Baboghlian**  
-- **GitHub:** [@vinibaboghlian](https://github.com/vinibaboghlian)  
-- **Repositório:** [imersao-dev-ia-studio-alura](https://github.com/vinibaboghlian/imersao-dev-ia-studio-alura)  
-
----
-*Projeto desenvolvido para a Imersão Dev com Google AI Studio da Alura.*
 `;
-

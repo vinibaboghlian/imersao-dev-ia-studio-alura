@@ -3,7 +3,7 @@
 # Imersão Dev com Google AI Studio & Alura
 # Autor: Vini Baboghlian
 # Repositório: vinibaboghlian/imersao-dev-ia-studio-alura
-# As 4 operações básicas: +, -, * e /
+# Operações: +, -, *, / e % (Porcentagem)
 # ==========================================
 
 # 1. DEFINIÇÃO DAS FUNÇÕES
@@ -24,6 +24,10 @@ def dividir(a, b):
         return "Erro: Não é possível dividir por zero!"
     return a / b
 
+def porcentagem(a, b):
+    # Calcula b% de a: exemplo: a = 200, b = 15 -> 15% de 200 = 30.0
+    return (a * b) / 100
+
 
 # 2. MENU DE OPÇÕES
 print("=" * 35)
@@ -34,10 +38,11 @@ print("  1 -> Adição (+)")
 print("  2 -> Subtração (-)")
 print("  3 -> Multiplicação (*)")
 print("  4 -> Divisão (/)")
+print("  5 -> Porcentagem (%)")
 print("=" * 35)
 
 # 3. ENTRADA DE DADOS DO USUÁRIO
-opcao = input("Digite o número da operação (1/2/3/4): ")
+opcao = input("Digite o número da operação (1/2/3/4/5): ")
 
 # O input() sempre lê texto (string), por isso usamos float() para converter em número
 num1 = float(input("Digite o primeiro número: "))
@@ -65,5 +70,9 @@ elif opcao == '4':
     else:
         print(f"\nResultado: {num1} / {num2} = {resultado}")
 
+elif opcao == '5':
+    resultado = porcentagem(num1, num2)
+    print(f"\nResultado: {num2}% de {num1} = {resultado}")
+
 else:
-    print("\nOpção inválida! Escolha um valor entre 1 e 4.")
+    print("\nOpção inválida! Escolha um valor entre 1 e 5.")
